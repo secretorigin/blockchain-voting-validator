@@ -1,0 +1,45 @@
+openapi: 3.0.2
+info:
+  version: 1.0.1
+  title: Blockchain Voting Validator
+  contact:
+    name: Kandakov Danil
+servers:
+  - url: http://localhost:30000/v1
+tags:
+  - name: Main
+    description: Main API
+paths:
+  /register:
+    post:
+      description: register new user
+      operationId: register
+      tags:
+        - Main
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterBody'
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegsiterResponse'
+        '400':
+          description: validation error
+        '500':
+          description: internal server error
+
+components:
+  schemas:
+    RegisterBody:
+      properties:
+        public_key_base64:
+          type: string
+    RegsiterResponse:
+      properties:
+        user_uuid:
+          type: string

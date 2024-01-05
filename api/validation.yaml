@@ -1,0 +1,44 @@
+openapi: 3.0.2
+info:
+  version: 1.0.1
+  title: Blockchain Voting Validator
+  contact:
+    name: Kandakov Danil
+servers:
+  - url: http://localhost:30000/v1
+tags:
+  - name: Validation
+    description: Validation API
+paths:
+  /validate:
+    post:
+      description: validate user's vote
+      operationId: validate
+      tags:
+        - Validation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateBody'
+      responses:
+        '200':
+          description: valid
+        '400':
+          description: not valid
+        '404':
+          description: user not found
+        '500':
+          description: internal server error
+
+components:
+  schemas:
+    ValidateBody:
+      properties:
+        user_uuid:
+          type: string
+        data_base64:
+          description: base64 of sha256 hash of row payload
+          type: string
+        signature_base64:
+          type: string

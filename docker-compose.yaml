@@ -1,0 +1,43 @@
+version: "2.3"
+
+services:
+  postgres:
+    container_name: validator-postgres
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=validator_db
+      - POSTGRES_USER=validator
+      - POSTGRES_PASSWORD=Validator12345
+    volumes:
+      - ./migrations:/docker-entrypoint-initdb.d
+      - ./data/.pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U validator -d validator_db"]
+      interval: 4s
+      timeout: 3s
+      retries: 7
+    networks:
+      - main_network
+
+  service:
+    build: ./
+    container_name: validator-service
+    image: validator-service-img
+    restart: on-failure
+    environment:
+      - SERVICE_HOST=0.0.0.0
+      - SERVICE_PORT=30001
+    ports:
+      - 30001:30001
+    volumes:
+      - ./log:/app/log
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - main_network
+
+networks:
+  main_network:
+    driver: bridge

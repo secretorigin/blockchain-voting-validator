@@ -1,0 +1,9 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+DROP SCHEMA IF EXISTS validator CASCADE;
+CREATE SCHEMA IF NOT EXISTS validator;
+
+CREATE TABLE IF NOT EXISTS validator.users (
+  uuid TEXT PRIMARY KEY DEFAULT uuid_generate_v4(),
+  public_key_base64 TEXT NOT NULL
+);
