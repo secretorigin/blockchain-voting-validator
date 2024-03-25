@@ -24,6 +24,7 @@ func NewValidateHandler(postgres *database.Postgres) *ValidateHandler {
 
 type ValidateRequest struct {
 	UserUuid        string `json:"user_uuid"`
+	VotingUuid      string `json:"voting_uuid,omitempty"`
 	DataBase64      string `json:"data_base64"`
 	SignatureBase64 string `json:"signature_base64"`
 }

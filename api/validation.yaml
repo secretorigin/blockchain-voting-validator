@@ -12,7 +12,7 @@ tags:
 paths:
   /validate:
     post:
-      description: validate user's vote
+      description: validate user's data
       operationId: validate
       tags:
         - Validation
@@ -37,8 +37,10 @@ components:
       properties:
         user_uuid:
           type: string
+        voting_uuid:
+          type: string
         data_base64:
-          description: base64 of sha256 hash of row payload
+          description: base64 of sha256 hash of raw payload
           type: string
         signature_base64:
           type: string

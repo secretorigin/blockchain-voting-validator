@@ -5,7 +5,7 @@ start: build
 	docker-compose up -d
 
 run-test:
-	go run tests/main.go
+	go run tests/test.go
 
 start-tests:
 	make start
